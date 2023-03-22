@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, TouchableHighlight, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 
-const Formulario = () => {
+const Formulario = ({ moneda, criptomoneda, guardarMoneda, guardarCriptomoneda, guardarConsultarAPI}) => {
 
-    const [ moneda, guardarMoneda] = useState('');
-    const [ criptomoneda, guardarCriptomoneda] = useState('');
     const [ criptomonedas, guardarCriptomonedas] = useState([]);
 
     useEffect(() => {
@@ -24,6 +22,26 @@ const Formulario = () => {
     }
     const obtenerCriptomoneda = cripto => {
         guardarCriptomoneda(cripto)
+    }
+
+    const cotizarPrecio = () => {
+        if(moneda.trim() === '' || criptomoneda.trim() === ''){
+            mostrarAlerta();
+            return;
+        }
+        
+        //Cambiar el state de consultar api
+        guardarConsultarAPI(true)
+    }
+
+    const mostrarAlerta = () => {
+        Alert.alert(
+            'Error...',
+            'Ambos campos son obligatorios',
+            [
+                {text: 'OK'}
+            ]
+        )
     }
 
     return ( 
@@ -45,7 +63,7 @@ const Formulario = () => {
             <Text style={styles.label}>Criptomoneda</Text>
             <Picker
                 selectedValue={criptomoneda}
-                onValueChange={cripto => obtenerMoneda(cripto)}
+                onValueChange={cripto => obtenerCriptomoneda(cripto)}
                 itemStyle={{ height: 120 }}
             >
                 <Picker.Item label="- Seleccione -" value=""/>
@@ -53,6 +71,13 @@ const Formulario = () => {
                     <Picker.Item key={cripto.CoinInfo.Id} label={cripto.CoinInfo.FullName} value={cripto.CoinInfo.Name}/>
                 ) ) }
             </Picker>
+
+            <TouchableHighlight
+                style={styles.btnCotizar}
+                onPress= { () => cotizarPrecio()}
+            >
+                <Text style={styles.textoCotizar}>Cotizar</Text>
+            </TouchableHighlight>
         </View>
      );
 }
@@ -63,6 +88,18 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
         fontSize: 22,
         marginVertical: 20,
+    },
+    btnCotizar: {
+        backgroundColor: '#5E49E2',
+        padding: 10,
+        marginTop: 20,
+    },
+    textoCotizar: {
+        color: '#FFF',
+        fontSize: 18,
+        fontFamily: 'Lato-Black',
+        textTransform: 'uppercase',
+        textAlign: 'center',
     }
 });
  
