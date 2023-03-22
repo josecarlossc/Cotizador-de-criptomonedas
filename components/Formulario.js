@@ -58,6 +58,14 @@ const Formulario = ({ moneda, criptomoneda, guardarMoneda, guardarCriptomoneda, 
                 <Picker.Item label="Peso Mexicano" value="MXN"/>
                 <Picker.Item label="Euro" value="EUR"/>
                 <Picker.Item label="Libra Esterlina" value="GBP"/>
+                <Picker.Item label="Franco Suizo" value="CHF"/>
+                <Picker.Item label="Yen japonés" value="JPY"/>
+                <Picker.Item label="Dólar hongkonés" value="HKD"/>
+                <Picker.Item label="Dólar canadiense" value="CAD"/>
+                <Picker.Item label="Yuan chino" value="CNY"/>
+                <Picker.Item label="Dólar australiano" value="AUD"/>
+                <Picker.Item label="Rublo ruso" value="RUB"/>
+
             </Picker>
 
             <Text style={styles.label}>Criptomoneda</Text>
@@ -90,7 +98,7 @@ const styles = StyleSheet.create({
         marginVertical: 20,
     },
     btnCotizar: {
-        backgroundColor: '#5E49E2',
+        backgroundColor: '#A20404',
         padding: 10,
         marginTop: 20,
     },
